@@ -15,16 +15,16 @@ build:
   noarch: python
   entry_points:
     - k2g = kml2geojson.cli:k2g
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
+    - python {{ python_min }}
+    - hatchling
     - pip
-    - python >=3.6,<4.0
-    - poetry >=1,<2
   run:
-    - click >=8.0.1,<9.0.0
-    - python >=3.6,<4.0
+    - python >={{ python_min }}
+    - click >=8.0.1
 
 test:
   imports:
@@ -33,6 +33,7 @@ test:
     - pip check
     - k2g --help
   requires:
+    - python {{ python_min }}
     - pip
 
 about:
