@@ -1,5 +1,5 @@
 {% set name = "kml2geojson" %}
-{% set version = "5.1.0" %}
+{% set version = "6.0.0" %}
 
 
 package:
@@ -7,24 +7,24 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/kml2geojson-{{ version }}.tar.gz
-  sha256: 76a69f598e55d2eff90332e87ee9480c36120f60e6f5d6b5aaeba63ce92a3dfa
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/kml2geojson-{{ version }}.tar.gz
+  sha256: 1340448c64f09ecf646cd7ddab8c81f27cba78b2118c2eb7474ead095bbdedf7
 
 build:
   number: 0
   noarch: python
   entry_points:
     - k2g = kml2geojson.cli:k2g
-  script: {{ PYTHON }} -m pip install . -vv
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
+    - python {{ python_min }}
+    - hatchling
     - pip
-    - python >=3.6,<4.0
-    - poetry >=1,<2
   run:
-    - click >=8.0.1,<9.0.0
-    - python >=3.6,<4.0
+    - python >={{ python_min }}
+    - click >=8.0.1
 
 test:
   imports:
@@ -33,6 +33,7 @@ test:
     - pip check
     - k2g --help
   requires:
+    - python {{ python_min }}
     - pip
 
 about:
